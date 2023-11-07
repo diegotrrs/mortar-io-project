@@ -63,7 +63,13 @@ Python's unittest is used for unit testing. There are two files that include tes
 
 # 2. How to install
 
-From the root folder run:
+The project uses [Poetry](https://python-poetry.org/) as for packing and dependency management. Therefore, you might need to install poetry first. Follow the instructions [here](https://python-poetry.org/docs/#installing-with-pipx) or run the following command
+
+```bash
+pipx install poetry
+```
+
+and then from the root folder of the project run:
 ```bash
 poetry install
 ```
