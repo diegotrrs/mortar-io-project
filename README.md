@@ -1,6 +1,11 @@
 # 1. Description
 Mention folder structure
 
+# 2. How to install
+
+```bash
+```
+
 # 2. How to run
 
 ```bash
