@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "mortar-io-project"
+version = "0.1.0"
+description = ""
+authors = ["Diego T. <diego.torres.arguedas@gmail.com>"]
+readme = "README.md"
+packages = [{include = "mortar_io_project"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+flask = "^3.0.0"
+pydantic = "^2.4.2"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.10.1"
+
+[tool.black]
+include_trailing_comma = true
+multi_line_output = 3
+force_grid_wrap = 1
+line_length = 180
+exclude = "migrations"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
