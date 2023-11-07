@@ -27,8 +27,10 @@ def add_weather_report_to_city(city_id: str):
     Add a weather report for a city
     """
     try:
-        data = request.get_json()
+       
+        data = request.get_json()       
         report = CityWeatherReport(**data)
+     
         weather_report_manager.add_report_to_city(city_id, report)
 
         return jsonify({"message": f"Weather report added successfully for {city_id}"})
@@ -51,7 +53,7 @@ def get_latest_weather_report(city_id: str):
 
 
 @app.route("/weather-api/cities/summary", methods=["GET"])
-def get_all_weather_reports():
+def get_all_weather_reports():    
     """
     Retrieve a summary of all cities currently in the system with their latest weather conditions
     """

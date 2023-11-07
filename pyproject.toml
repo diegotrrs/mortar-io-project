@@ -12,6 +12,7 @@ pydantic = "^2.4.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.10.1"
+flask-testing = "^0.8.1"
 
 [tool.black]
 include_trailing_comma = true

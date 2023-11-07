@@ -4,7 +4,7 @@ from pydantic import BaseModel
 class CityWeatherReport(BaseModel):
     """Represents a weather report for a city"""
 
-    temperature: int
+    temperature: float
     condition: str
     timestamp: int
 

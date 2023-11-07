@@ -6,13 +6,12 @@ from weather_reports_manager import WeatherReportManager
 
 # Test cases for the add_report_to_city method
 class TestAddReportToCity(unittest.TestCase):
-    weather_report_manager = WeatherReportManager()
-
     def test_it_should_add_a_report_to_a_city(self):
         """It should add a report to a city"""
+        weather_report_manager = WeatherReportManager()
 
-        self.weather_report_manager.add_report_to_city("london", {"temperature": 9, "condition": "Cloudy", "timestamp": 1667983762000})
-        reports = self.weather_report_manager.get_all_reports_for_city("london")
+        weather_report_manager.add_report_to_city("london", {"temperature": 9, "condition": "Cloudy", "timestamp": 1667983762000})
+        reports = weather_report_manager.get_all_reports_for_city("london")
         self.assertEqual(
             reports,
             [{"temperature": 9, "condition": "Cloudy", "timestamp": 1667983762000}],
@@ -21,17 +20,17 @@ class TestAddReportToCity(unittest.TestCase):
 
 # Test cases for the get_latest_report_for_city method
 class TestGetLatestReportForCity(unittest.TestCase):
-    weather_report_manager = WeatherReportManager()
-
-    weather_report_manager.add_report_to_city("madrid", CityWeatherReport(temperature=19, condition="Sunny", timestamp=166798376_2005))
-    weather_report_manager.add_report_to_city("london", CityWeatherReport(temperature=10, condition="Rainy", timestamp=1))
-    weather_report_manager.add_report_to_city("madrid", CityWeatherReport(temperature=17, condition="Cloudy", timestamp=166798376_2010))
-    weather_report_manager.add_report_to_city("madrid", CityWeatherReport(temperature=18, condition="Partly Cloudy", timestamp=166798376_2000))
+    def setUp(self):
+        self.weather_report_manager = WeatherReportManager()
+        self.weather_report_manager.add_report_to_city("madrid", CityWeatherReport(temperature=19.5, condition="Sunny", timestamp=166798376_2005))
+        self.weather_report_manager.add_report_to_city("london", CityWeatherReport(temperature=10, condition="Rainy", timestamp=1))
+        self.weather_report_manager.add_report_to_city("madrid", CityWeatherReport(temperature=17.4, condition="Cloudy", timestamp=166798376_2010))
+        self.weather_report_manager.add_report_to_city("madrid", CityWeatherReport(temperature=18, condition="Partly Cloudy", timestamp=166798376_2000))
 
     def test_it_should_return_latest_report_for_existing_city(self):
         """It should return the latest report for an existing city"""
 
-        expected_latest = CityWeatherReport(temperature=17, condition="Cloudy", timestamp=166798376_2010)
+        expected_latest = CityWeatherReport(temperature=17.4, condition="Cloudy", timestamp=166798376_2010)
         latest = self.weather_report_manager.get_latest_report_for_city("madrid")
 
         self.assertEqual(
@@ -73,10 +72,11 @@ class TestGetAllCitiesSummary(unittest.TestCase):
 
 # Test cases for the update_city_latest_report method
 class TestDeleteReportsForCityMethod(unittest.TestCase):
-    weather_report_manager = WeatherReportManager()
-    weather_report_manager.add_report_to_city("madrid", CityWeatherReport(temperature=19, condition="Sunny", timestamp=166798376_2005))
-    weather_report_manager.add_report_to_city("madrid", CityWeatherReport(temperature=17, condition="Cloudy", timestamp=166798376_2010))
-    weather_report_manager.add_report_to_city("madrid", CityWeatherReport(temperature=18, condition="Partly Cloudy", timestamp=166798376_2000))
+    def setUp(self):
+        self.weather_report_manager = WeatherReportManager()
+        self.weather_report_manager.add_report_to_city("madrid", CityWeatherReport(temperature=19, condition="Sunny", timestamp=166798376_2005))
+        self.weather_report_manager.add_report_to_city("madrid", CityWeatherReport(temperature=17, condition="Cloudy", timestamp=166798376_2010))
+        self.weather_report_manager.add_report_to_city("madrid", CityWeatherReport(temperature=18, condition="Partly Cloudy", timestamp=166798376_2000))
 
     def test_it_should_update_the_info_for_the_latest_report(self):
         """It should update the attributes of the latest weather report for a specific country."""
@@ -98,22 +98,23 @@ class TestDeleteReportsForCityMethod(unittest.TestCase):
 
 # Test cases for the delete_reports_for_city method
 class TestDeleteReportsForCityMethod(unittest.TestCase):
-    weather_report_manager = WeatherReportManager()
+    def setUp(self):
+        self.weather_report_manager = WeatherReportManager()
+        self.london_reports = [
+            CityWeatherReport(temperature=10, condition="Rainy", timestamp=166798376_2008),
+            CityWeatherReport(temperature=9, condition="Rainy", timestamp=166798376_2108),
+        ]
 
-    london_reports = [CityWeatherReport(temperature=10, condition="Rainy", timestamp=166798376_2008), CityWeatherReport(temperature=9, condition="Rainy", timestamp=166798376_2108)]
+        self.lisbon_reports = [
+            CityWeatherReport(temperature=19, condition="Clear", timestamp=166798376_2008),
+        ]
 
-    lisbon_reports = [
-        CityWeatherReport(temperature=19, condition="Clear", timestamp=166798376_2008),
-    ]
+        self.madrid_reports = [
+            CityWeatherReport(temperature=19, condition="Sunny", timestamp=166798376_2005),
+            CityWeatherReport(temperature=17, condition="Cloudy", timestamp=166798376_2010),
+            CityWeatherReport(temperature=18, condition="Partly Cloudy", timestamp=166798376_2000),
+        ]
 
-    madrid_reports = [
-        CityWeatherReport(temperature=19, condition="Sunny", timestamp=166798376_2005),
-        CityWeatherReport(temperature=17, condition="Cloudy", timestamp=166798376_2010),
-        CityWeatherReport(temperature=18, condition="Partly Cloudy", timestamp=166798376_2000),
-    ]
-
-    def test_it_should_delete_all_reports_for_specific_city(self):
-        """It should delete all weather reports for the specified city"""
         self.weather_report_manager.add_report_to_city("madrid", self.madrid_reports[0])
         self.weather_report_manager.add_report_to_city("madrid", self.madrid_reports[1])
         self.weather_report_manager.add_report_to_city("madrid", self.madrid_reports[2])
@@ -123,6 +124,8 @@ class TestDeleteReportsForCityMethod(unittest.TestCase):
 
         self.weather_report_manager.add_report_to_city("lisbon", self.lisbon_reports[0])
 
+    def test_it_should_delete_all_reports_for_specific_city(self):
+        """It should delete all weather reports for the specified city"""
         self.weather_report_manager.delete_reports_for_city("madrid")
 
         reports = self.weather_report_manager.get_weather_reports()
@@ -134,14 +137,6 @@ class TestDeleteReportsForCityMethod(unittest.TestCase):
 
     def test_delete_weather_reports_until_all_deleted(self):
         """It should delete all of the reports in the system if the delete_reports_for_city method is called for all of the cities"""
-        self.weather_report_manager.add_report_to_city("madrid", self.madrid_reports[0])
-        self.weather_report_manager.add_report_to_city("madrid", self.madrid_reports[1])
-        self.weather_report_manager.add_report_to_city("madrid", self.madrid_reports[2])
-
-        self.weather_report_manager.add_report_to_city("london", self.london_reports[0])
-        self.weather_report_manager.add_report_to_city("london", self.london_reports[1])
-
-        self.weather_report_manager.add_report_to_city("lisbon", self.lisbon_reports[0])
 
         self.weather_report_manager.delete_reports_for_city("madrid")
         self.weather_report_manager.delete_reports_for_city("london")
