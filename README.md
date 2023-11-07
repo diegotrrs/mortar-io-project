@@ -7,9 +7,6 @@ Mention folder structure
 poetry run python src/app.py
 ```
 
-```bash
-poetry run black src
-```
 
 ```
 poetry run python -m unittest discover -s src

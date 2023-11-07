@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 weather_report_manager = WeatherReportManager()
 
+
 @app.route("/weather-api/cities/<string:city_id>/reports", methods=["GET"])
 def get_all_reports_for_city(city_id: str):
     """
@@ -41,8 +42,8 @@ def get_latest_weather_report(city_id: str):
     """
     Retrieve the latest weather report for a given city
     """
-    try:        
-        latest_report = weather_report_manager.get_latest_report_for_city(city_id)        
+    try:
+        latest_report = weather_report_manager.get_latest_report_for_city(city_id)
         return jsonify(latest_report.__dict__)
 
     except CityNotFoundError as e:
