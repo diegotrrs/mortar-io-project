@@ -156,11 +156,11 @@ poetry run python -m unittest discover -s src
 In the ``test_weather_reports_manager.py`` file. The test cases are grouped by each of the WeatherReportsManager methods and they include "happy paths" as well as paths were Exceptions are thrown. The ``test_app.py`` file includes tests add report endpoint.
 
 
-# 3. Improvements
+# 6. Improvements
 - Extend the test cases for the flask app to test all of the endpoints.
 - Define Conditions as an Enum and validate that the value specified is valid.
 - The scale system for the temperature should be defined part of the system (e.g: Celsius).
 
 
-# 4. Assumptions
+# 7. Assumptions
 In the description when it said "latest weather report" it was assumed that it was the report with the highest timestamp.
